@@ -1,8 +1,22 @@
 'use client'
 
 import { useState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { Eye, EyeOff } from 'lucide-react'
 import { login } from './actions'
+
+function SubmitButton() {
+    const { pending } = useFormStatus()
+    return (
+        <button
+            type="submit"
+            disabled={pending}
+            className="inline-flex h-10 w-full items-center justify-center rounded-md bg-zinc-900 px-8 text-sm font-medium text-zinc-50 shadow transition-colors hover:bg-zinc-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50"
+        >
+            {pending ? 'Cargando...' : 'Entrar al sistema'}
+        </button>
+    )
+}
 
 export default function LoginPage({ searchParams }: { searchParams: { error: string } }) {
     const [showPassword, setShowPassword] = useState(false)
@@ -67,12 +81,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error: str
                         </p>
                     )}
 
-                    <button
-                        type="submit"
-                        className="inline-flex h-10 w-full items-center justify-center rounded-md bg-zinc-900 px-8 text-sm font-medium text-zinc-50 shadow transition-colors hover:bg-zinc-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        Entrar al sistema
-                    </button>
+                    <SubmitButton />
                 </form>
             </div>
         </div>
